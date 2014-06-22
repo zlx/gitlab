@@ -1,0 +1,14 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1" name="viewport"><meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"><meta content="GitLab ruby client | API wrapper | CLI · Examples" name="description"><title>Examples - GitLab API ruby gem</title><link href="stylesheets/all-cafa23eb.css" rel="stylesheet" type="text/css" /><!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--></head><body class="examples"><div id="wrapper"><div id="sidebar-wrapper"><ul class="sidebar-nav"><li class="sidebar-brand"><a href="http://narkoz.github.io/gitlab">GitLab</a></li><li><a href="installation">Installation</a></li><li><a href="configuration">Configuration</a></li><li><a href="usage">Usage</a></li><li><a href="cli">CLI</a></li><li><a href="examples">Examples</a></li><hr class="side-hr"><li><a href="https://github.com/narkoz/gitlab"><span class="glyphicon glyphicon-star"></span> GitHub page</a></li><li><a href="http://rubydoc.info/gems/gitlab/frames"><span class="glyphicon glyphicon-book"></span> Documentation</a></li></ul></div><div id="page-content-wrapper"><div class="content-header"><h1><a class="btn btn-default" href="#" id="menu-toggle"><span class="glyphicon glyphicon-align-justify"></span></a> Examples</h1></div><div class="page-content inset"><div class="row"><div class="col-md-8"><h1>Get private token</h1><p>Authorize and get private token of a user</p><pre><code>user = Gitlab.session('email', 'password')
+user.private_token #=> "qEsq1pt6HJPaNciie3MG"</code></pre><hr><h1>Mass create projects</h1><p>Bulk create projects and repositories</p><pre><code># See: http://narkoz.github.io/gitlab/configuration
+client = Gitlab.client(endpoint: endpoint, private_token: private_token)
+
+project_names = %w(project1 project2 project007)
+
+project_names.each do |name|
+  project = client.create_project name
+  puts "#{name} created on #{project.web_url}"
+end</code></pre><hr><h1>Handling errors</h1><p>The client raises errors inherited from <code>Gitlab::Error::Error</code></p><pre><code>begin
+  client.create_project 'example'
+rescue Gitlab::Error::Error => error
+  puts error
+end</code></pre></div></div></div></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script><script src="javascripts/all-fc0e8a32.js" type="text/javascript"></script></body></html>
