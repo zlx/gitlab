@@ -88,8 +88,12 @@ describe Gitlab::Client do
       expect(@merge_request).to be_an Array
       expect(@merge_request.length).to eq(2)
       expect(@merge_request[0].note).to eq("this is the 1st comment on the 2merge merge request")
+      expect(@merge_request[0].line).to eq(5)
+      expect(@merge_request[0].file_path).to eq("files/ruby/features.rb")
       expect(@merge_request[0].author.id).to eq(11)
       expect(@merge_request[1].note).to eq("another discussion point on the 2merge request")
+      expect(@merge_request[1].line).to eq(3)
+      expect(@merge_request[1].file_path).to eq("files/rails/features.rb")
       expect(@merge_request[1].author.id).to eq(12)
     end
   end
@@ -119,6 +123,21 @@ describe Gitlab::Client do
       @merge_request = Gitlab.create_merge_request_comment(3, 2, 'Cool Merge Request!')
       expect(@merge_request.note).to eq('Cool Merge Request!')
       @merge_request.author.id == 1
+    end
+
+    it "should return information about a merge request comment" do
+      @merge_request = Gitlab.create_merge_request_comment(
+        3,
+        2,
+        'Cool Merge Request!',
+        line: 6,
+        file_path: 'files/ruby/features.rb',
+        line_type: 'new'
+      )
+      expect(@merge_request.note).to eq('Cool Merge Request!')
+      @merge_request.author.id == 1
+      @merge_request.line == 6
+      @merge_request.file_path == 'files/ruby/features.rb'
     end
   end
 end

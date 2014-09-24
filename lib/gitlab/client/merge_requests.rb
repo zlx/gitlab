@@ -71,12 +71,23 @@ class Gitlab::Client
     # Adds a comment to a merge request.
     #
     # @example
-    #   Gitlab.create_merge_request_comment(5, 1, "Awesome merge!")
-    #   Gitlab.create_merge_request_comment('gitlab', 1, "Awesome merge!")
+    #   Gitlab.create_merge_request_comment(5, 1, "Awesome merge!",
+    #   line: 5,
+    #   file_path: '/path/of/file',
+    #   line_type: 'new'
+    #   )
+    #   Gitlab.create_merge_request_comment('gitlab', 1, "Awesome merge!",
+    #   line: 5,
+    #   file_path: '/path/of/file',
+    #   line_type: 'new'
+    #   )
     #
     # @param  [Integer] project The ID of a project.
     # @param  [Integer] id The ID of a merge request.
     # @param  [String] note The content of a comment.
+    # @param  [Integer] :line The line number of the comment on.
+    # @param  [String] :file_path The file path of a comment on.
+    # @param  [String] :line_type The line type of a comment on.
     # @return [Gitlab::ObjectifiedHash] Information about created merge request comment.
     def create_merge_request_comment(project, id, note, options = {})
       post("/projects/#{project}/merge_request/#{id}/comments", :body => {
